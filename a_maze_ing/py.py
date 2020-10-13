@@ -1,49 +1,31 @@
-def generate_lab():
-    with open('a_maze_ing.txt', 'w') as f:
-        for j in range(15):
-            for i in range(15):
-                f.write("1")
-            f.write('\n')
+class Maze():
+    width = 15
+    height = 15
+    filename = 'a_maze_ing.txt'
 
+    def lab_txt_to_list(self):
+        """
+        Convert text file which represents the the labyrinth layout into a list.
 
-def lab_to_list():
-    with open('a_maze_ing.txt', 'r') as f:
-        list_of_lines = f.readlines()
-        list_of_lines = [line[:-1] for line in list_of_lines]
-    return list_of_lines
+        The text file, which represents the labyrinth, is stored as a list of rows.
+        The keys of this list represents the row number.
+        An element of this list represents all the elements in a row
 
+        Returns:
+            list:
+                a list of labyrinth rows
+        """
+        master_list = []
+        with open('a_maze_ing.txt', 'r') as m:
+            for line in m:
+                line = line.strip()
+                master_list.append(line)
+                print
+                for i in range(len(master_list)):
+                    master_list[i] = list(master_list[i])
+            return master_list
 
-def put_in_lab(master_list: list, x: int, y: int, object_to_place):
-    """
-    Put an element in the lab.
-
-    Args:
-        master_list (list): list representing the lab
-        x (int): abs postion of object
-        y (int): ord position of object
-        object_to_place (str): element to place in lab.
-
-    Returns:
-        master_list (list): list representing the lab with the new element in it
-    """
-    line = list(master_list[y])
-    line[x-1] = object_to_place
-    master_list[y] = line
-    return master_list
-
-def del_from_lab(master_list: list, x: int, y: int):
-    """
-    Del an element from the lab
-
-    Args:
-        master_list (list): list representing the lab
-        x (int): abs postion of object
-        y (int): ord position of object
-
-    Returns:
-        master_list (list): list representing the lab with desired element removed
-    """
-    line = list(master_list[y])
-    line[x-1] = ' '
-    master_list[y] = line
-    return master_list
+mazing = Maze()
+x = mazing.lab_txt_to_list()
+print(len(x))
+print(x)
