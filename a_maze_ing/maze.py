@@ -1,4 +1,9 @@
+# encoding: utf-8
+"""
+maze.py
+"""
 import random
+from macgyver.a_maze_ing.constants import DISPLAY, FILENAME, DIMENSION, CHOICE_ITEMS
 
 
 class Maze():
@@ -17,37 +22,49 @@ class Maze():
     tube = 't'
     ether = 'e'
 
-    def __init__(self):
+    def __init__(self, list_pers, list_items):
         self.list_walls = []
         self.list_path = []
-        self.list_pers = []
-        self.list_items = []
+        self.list_pers = list_pers
+        self.list_items = list_items
         self.start.position = ()
         self.finish.position = ()
+        self.__create_lists_of_lab_elements()
 
-    def create_lists_of_everything(self):
-        with open('a_maze_ing.txt', 'r') as m:
-            y = 0           # row number
+    def __create_lists_of_lab_elements(self):
+        with open(FILENAME, 'r') as m:
+            row = 0                         # row number
             for line in m:
-                x = 0       # column number
+                column = 0                  # column number
                 for char in line:
                     if char != '\n':
-                        if char == 'X':
-                            self.list_walls.append((y, x))
-                        elif char == ' ':
-                            self.list_path.append((y, x))
-                        elif char == 'S':
-                            self.start.position = (y, x)
-                        elif char == 'F':
-                            self.start.position = (y, x)
-                    x += 1  # row increment
-                y += 1      # column increment
-            self.width = x
-            self.height = y
+                        if char == DISPLAY['wall']:
+                            self.list_walls.append((row, column))
+                        elif char == DISPLAY['path']:
+                            self.list_path.append((row, column))
+                        elif char == DISPLAY['start']:
+                            self.start.position = (row, column)
+                        elif char == DISPLAY['finish']:
+                            self.start.position = (row, column)
+                    column += 1             # column increment
+                row += 1                    # row increment
+            assert DIMENSION['width'] == column+1
+            assert DIMENSION['height'] == row+1
 
-    def pick_random_empty_position(self):
-        return random.choice(Maze.list_path)
+    @staticmethod
+    def pick_random(some_list: list):
+        """
+        [summary]
 
+        Args:
+            some_list (list): list to choose an element from.
+
+        Returns:
+            [type]: [description]
+        """
+        return random.choice(some_list)
+
+    @property
     def display_lab_in_console():
         pass
 
@@ -63,6 +80,9 @@ class Characters(Maze):
         elif self.name == 'gard':
             self.position = Maze.finish.position
 
+    def create_list_of_pers():
+        pass
+
     def disabled(self):
         self.state = False
 
@@ -71,16 +91,11 @@ class Characters(Maze):
 
 
 class SomeItem(Maze):
-    """
-    choice_items_name = ('needle', 'tube', 'ether', 'syringe')
-    choice_item_nature = ('collectable', 'fabricable')
-    choice_items_property = ('mac', 'lab', None)
-    choice_items_state = ('to_find', 'found', 'used', 'made', 'to_fabricate')
-    """
 
     def __init__(self, name: str, position: tuple):
         self.name = name
         self.position = position
+
         if self.name == 'syringe':
             self.nature = 'fabricable'
             self.property = None
@@ -90,6 +105,12 @@ class SomeItem(Maze):
             self.property = 'lab'
             self.state = 'to_find'
 
+    def create_list_of_items():
+        pass
+
+    def access_list_items():
+        pass
+
     def item_is_picked_up(self):
         self.property = 'mac'
         self.state = 'found'
@@ -97,3 +118,7 @@ class SomeItem(Maze):
 
     def assemble_items():
         pass
+
+
+class CustomAssertions:
+    def assertFileExists(self, path):
