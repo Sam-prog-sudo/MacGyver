@@ -11,15 +11,15 @@ DIMENSION = {
     }
 
 DISPLAY = {
-    'path': ' '
-    'wall': 'X'
-    'gard': 'G'
-    'macgyver': 'M'
-    'start': 'S'
-    'finish': 'F'
-    'needle': 'n'
-    'tube': 't'
-    'ether': 'e'
+    'path': ' ',
+    'wall': 'X',
+    'gard': 'G',
+    'macgyver': 'M',
+    'start': 'S',
+    'finish': 'F',
+    'needle': 'n',
+    'tube': 't',
+    'ether': 'e',
 }
 
 CHOICE_ITEMS = {

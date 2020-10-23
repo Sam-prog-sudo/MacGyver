@@ -1,34 +1,23 @@
 # encoding: utf-8
+
+# deplacement + affichage
 """
 maze.py
 """
 import random
-from macgyver.a_maze_ing.constants import DISPLAY, FILENAME, DIMENSION, CHOICE_ITEMS
+from constants import DISPLAY, FILENAME, DIMENSION, CHOICE_ITEMS
 
 
 class Maze():
 
-    # constants to be placed in some other file
-    width = 0
-    height = 0
-    filename = 'a_maze_ing.txt'
-    path = " "
-    wall = "X"
-    gard = "G"
-    macgyver = "M"
-    start = "S"
-    finish = "F"
-    needle = 'n'
-    tube = 't'
-    ether = 'e'
-
     def __init__(self, list_pers, list_items):
         self.list_walls = []
         self.list_path = []
-        self.list_pers = list_pers
-        self.list_items = list_items
-        self.start.position = ()
-        self.finish.position = ()
+        self.list_pers = list_pers  #  faire 2 objets pas de list
+    
+        self.list_items = list_items  #  construire ici
+        self.start.position = ()   #lorsque'il y a S, créer mac gyver
+        self.finish.position = ()    #lorsque'il y a E, créer gard
         self.__create_lists_of_lab_elements()
 
     def __create_lists_of_lab_elements(self):
@@ -48,8 +37,8 @@ class Maze():
                             self.start.position = (row, column)
                     column += 1             # column increment
                 row += 1                    # row increment
-            assert DIMENSION['width'] == column+1
-            assert DIMENSION['height'] == row+1
+            #  assert DIMENSION['width'] == column+1
+            #  assert DIMENSION['height'] == row+1
 
     @staticmethod
     def pick_random(some_list: list):
@@ -64,12 +53,12 @@ class Maze():
         """
         return random.choice(some_list)
 
-    @property
     def display_lab_in_console():
+        # print en fct des coord
         pass
 
 
-class Characters(Maze):
+class Characters():
 
     def __init__(self, name, position):
         self.name = name
@@ -90,12 +79,13 @@ class Characters(Maze):
         pass
 
 
-class SomeItem(Maze):
+class SomeItem():
 
     def __init__(self, name: str, position: tuple):
         self.name = name
         self.position = position
 
+        # faire qlqchose de plus générique
         if self.name == 'syringe':
             self.nature = 'fabricable'
             self.property = None
