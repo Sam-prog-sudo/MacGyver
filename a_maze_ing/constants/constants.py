@@ -2,10 +2,13 @@
 """
 Constants.py
 """
+from os.path import abspath, dirname, join
 
-FILENAME = 'a_maze_ing.txt'
+BASE_DIR = abspath(join(dirname(__file__), '../..'))
 
-DIMENSION = {
+FILENAME = join(BASE_DIR, 'a_maze_ing.txt')
+
+SIZE = {
     'width': 15,
     'height': 15,
     }
@@ -15,8 +18,6 @@ DISPLAY = {
     'wall': 'X',
     'gard': 'G',
     'macgyver': 'M',
-    'start': 'S',
-    'finish': 'F',
     'needle': 'n',
     'tube': 't',
     'ether': 'e',
@@ -29,20 +30,10 @@ CHOICE_ITEMS = {
         'ether',
         'syringe',
         ),
-    'nature': (
-        'collectable',
-        'fabricable',
-        ),
-    'property': (
-        'mac',
-        'lab',
-        None,
-        ),
     'state': (
         'to_find',
-        'found',
-        'used',
-        'made',
         'to_fabricate',
         ),
     }
+
+VALID_DIRECTIONS = {'up', 'down', 'left', 'right'}
