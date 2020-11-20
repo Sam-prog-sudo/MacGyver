@@ -13,16 +13,19 @@ class Characters:
         self.position_Y = position_Y
         self.movable = movable
         self.display = C.DISPLAY[self.name]
-        self.alive = True  # alive or dead/sleeping
-
+        self.sleeping = False
+        if self.name == 'macgyver':
+            self.backpack = []
 
     @property
     def position_tuple(self):
         return (self.position_Y, self.position_X)
 
-    @property
     def disable(self):
-        self.alive = False
+        """
+        Wishes a character goodnight.
+        """
+        self.sleeping = True
 
     def move(self, direction, list_valid_path):
         """
@@ -32,14 +35,11 @@ class Characters:
         move outside the labyrinth.
 
         Args:
-            direction (str): direction to which the character is moving.
-            list_valid_path (list): a list of valid path.
-
-        return:
-            bool: whether or not character movement is permitted.
+        - direction (str): direction to which the character is moving.
+        - list_valid_path (list): a list of valid path.
 
         Raises:
-            ValueError: direction of movement
+        - ValueError: direction of movement
             can only be of (set) VALID_DIRECTIONS.
         """
 
@@ -73,11 +73,8 @@ class Characters:
         Store character new position.
 
         Args:
-            pos_x (int): desired postion to be compared.
-            list_valid_path (list): list of valide postion to compare with.
-
-        Returns:
-            bool: whether or not new position is valid.
+        - pos_x (int): desired postion to be compared.
+        - list_valid_path (list): list of valid postion to compare with.
         """
         if (self.position_Y, pos_x) not in list_valid_path:
             print("Wrong way :(\n")
@@ -92,20 +89,19 @@ class Characters:
         Store character new position.
 
         Args:
-            pos_y (int): desired postion to be compared.
-            list_valid_path (list): list of valide postion to compare with.
-
-        Returns:
-            bool: whether or not new position is valid.
+        - pos_y (int): desired postion to be compared.
+        - list_valid_path (list): list of valid postion to compare with.
         """
         if (pos_y, self.position_X) not in list_valid_path:
             return
         else:
             self.position_Y = pos_y
 
-    def pick_up_item(self, list_of_items):
-        for an_item in list_of_items:
-            if self.position_X == an_item.position_X:
-                if self.position_Y == an_item.position_Y:
-                    self.backpack.append(an_item.name)
-                    an_item.state = 'found'
+    def pick_up_item(self, an_item):
+        """
+        pick_up_item store an_item into macgyver's backpack.
+
+        Args:
+        - an_item (object): a pickable item.
+        """
+        self.backpack.append(an_item)
