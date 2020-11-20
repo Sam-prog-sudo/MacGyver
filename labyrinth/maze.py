@@ -2,7 +2,6 @@
 """
 maze.py
 """
-
 from random import sample
 
 from assets import constants as C
@@ -17,24 +16,25 @@ class Maze:
         self.dict_display = {}
         self.list_walls = []
         self.list_paths = []
-        self.list_empty_paths = []
         self.list_items = []
         self.number_items = len(C.CHOICE_ITEMS['name'])
 
     def create_lab_elements(self):
         """
-        Read labyrinth template text file and create all.
+        Read labyrinth template text file and create all elements.
 
-        Read labyrinth text template to create :
+        Iterates through the labyrinth text template to create :
         - a list of tuples containing walls positions
         - a list of tuples containing paths positions
         (on which MacGyver can move)
         - MacGyver and Gard objects.
-        - all pickable items
+        - all pickable items.
+        - a list of all empty path
 
         NB:
         - position_X matches column number
         - position_y matches row number.
+        - list_empty_paths is created for printing purposes.
         """
 
         with open(C.LAB_TEMPLATE, 'r') as m:
@@ -72,24 +72,52 @@ class Maze:
 
     @staticmethod
     def __substract_list2_from_list1(list2, list1):
+        """
+        Substract a list from an other.
+
+        Args:
+        - list2 (list): list of elements to substract.
+        - list1 (list): list to be substracted from.
+
+        Returns:
+        - list: resulting list without desired list of elements.
+        """
         return [
             pos for pos in list1 if pos not in list2
             ]
 
     def _create_all_items(self):
+        """
+        _create_all_items for the maze.
+
+        Pick a finite number (n = self.number_items) of random position
+        from a list to create n instaces of SomeItem.
+        """
         list_items_pos = self.__pick_random_items_pos(self.number_items)
+
         for name in C.CHOICE_ITEMS['name']:
             n = 0
             self.list_items.append(
                 self.__create_an_item(
-                    name,
-                    list_items_pos.pop(n)
+                    a_name=name,
+                    pos_tuple=list_items_pos.pop(n)
                     )
                 )
             n += 1
 
     def __pick_random_items_pos(self, nbr_of_items: int):
         """
+        __pick_random_items_pos from a list of available paths.
+
+        Create a list of characters positions,
+        substract it from list_of_paths and randomly sample from it.
+        Then updates the list of empty paths.
+
+        Args:
+        - nbr_of_items (int): it reflects the number of disired positions.
+
+        Returns:
+        - list: all items positions.
         """
         list_char_pos = [
             self.gard.position_tuple,
@@ -108,6 +136,16 @@ class Maze:
 
     @staticmethod
     def __create_an_item(a_name, pos_tuple):
+        """
+        Create an item with its name and position.
+
+        Args:
+        - a_name (str): name of said item.
+        - pos_tuple (tuple): a tuple of position.
+
+        Returns:
+        - object: an instance of SomeItem
+        """
         item = SomeItem(
             name=a_name,
             position_X=pos_tuple[1],
@@ -117,13 +155,22 @@ class Maze:
 
     def print_lab(self):
         """
-        Display labyrinth in shell.
+        print_lab using its height and width.
+
+        Compare objects position with a position tuple
+        by iterating through maze width and height, to print following objects:
+        - all unpicked items
+        - all walls
+        - Macgyver
+        - the gard
+        - all empty paths
         """
         print('\n')
         for i in range(0, C.SIZE['height']):
             for j in range(0, C.SIZE['width']):
 
-                self._item_print(i, j)
+                if self.list_items:
+                    self._item_print(i, j)
 
                 if (i, j) in self.list_walls:
                     print(C.DISPLAY['wall'], end='')
@@ -138,18 +185,44 @@ class Maze:
                     print(C.DISPLAY['path'], end='')
             print('')
 
-    def _item_print(self, height, width):
-        for item in self.list_items:
-            if item.state == 'to_find':
-                if item.position_tuple == (height, width):
-                    print(C.DISPLAY[item.name], end='')
-            elif item.position_tuple not in self.list_empty_paths:
-                self.list_empty_paths.append(item.position_tuple)
+    def _item_print(self, height: int, width: int):
+        """
+        _item_print print an item.
 
-    def fight(self):
-        if self.macgyver.position_tuple == self.gard.position_tuple:
-            for item in self.list_items:
-                if all(item.state == 'found'):
-                    self.gard.disable
-                else:
-                    self.macgyver.disable
+        Compare item position with postion tuple,
+        by iterating through the list of items.
+
+        Args:
+        - height (int): height of maze.
+        - width (int): width of maze.
+        """
+        for item in self.list_items:
+            if item.position_tuple == (height, width):
+                print(C.DISPLAY[item.name], end='')
+
+    def chars_meet_up(self):
+        """
+        chars_meet_up disable either the gard or Macgyver when they meet up.
+        """
+        if len(self.macgyver.backpack) == 3:
+            self.gard.disable()
+        else:
+            self.macgyver.disable()
+
+    def update_list_items(self, an_item):
+        """
+        update_list_items remove an_item from the list of items.
+
+        Args:
+        - an_item (object): item to be removed.
+        """
+        self.list_items.remove(an_item)
+
+    def update_list_empty_path(self, an_item):
+        """
+        update_list_empty_path by appending an item position to it.
+
+        Args:
+        - an_item (object): item to get position from.
+        """
+        self.list_empty_paths.append(an_item.position_tuple)
