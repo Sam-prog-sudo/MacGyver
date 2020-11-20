@@ -6,6 +6,9 @@ from . import constants as C
 
 
 def intro():
+    """
+    intro print ascii art.
+    """
     with open(C.INTRO_TEMPLATE, 'r') as f:
         for line in f:
             print(line.rstrip())
