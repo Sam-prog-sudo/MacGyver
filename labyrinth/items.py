@@ -12,7 +12,6 @@ class SomeItem:
         self.position_X = position_X
         self.position_Y = position_Y
         self.display = C.DISPLAY[self.name]
-        self.state = 'to_find'
 
     @property
     def position_tuple(self):
