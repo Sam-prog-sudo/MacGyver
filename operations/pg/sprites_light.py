@@ -47,9 +47,8 @@ class Player(Elements):
     def update_pos(self, event, inter):
         keys = pygame.key.get_pressed()
         mov_keys = (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN)
-        if (any(mov_keys) in keys):
+        if (any(mov_keys) in keys) and event.type == pygame.KEYDOWN:
             key = pygame.key.name(event.key)
-
             if self.macgyver.move_char(key, self.maze.list_paths):
                 if inter.check_chars_pos():
                     self.maze.chars_meet_up()
