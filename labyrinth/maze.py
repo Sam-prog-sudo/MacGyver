@@ -153,53 +153,6 @@ class Maze:
         )
         return item
 
-    def print_lab(self):
-        """
-        print_lab using its height and width.
-
-        Compare objects position with a position tuple
-        by iterating through maze width and height, to print following objects:
-        - all unpicked items
-        - all walls
-        - Macgyver
-        - the gard
-        - all empty paths
-        """
-        print('\n')
-        for i in range(0, C.SIZE['height']):
-            for j in range(0, C.SIZE['width']):
-
-                if self.list_items:
-                    self._item_print(i, j)
-
-                if (i, j) in self.list_walls:
-                    print(C.DISPLAY['wall'], end='')
-
-                elif self.macgyver.position_tuple == (i, j): # noqa
-                    print(C.DISPLAY['macgyver'], end='')
-
-                elif self.gard.position_tuple == (i, j):
-                    print(C.DISPLAY['gard'], end='')
-
-                elif (i, j) in self.list_empty_paths:
-                    print(C.DISPLAY['path'], end='')
-            print('')
-
-    def _item_print(self, height: int, width: int):
-        """
-        _item_print print an item.
-
-        Compare item position with postion tuple,
-        by iterating through the list of items.
-
-        Args:
-        - height (int): height of maze.
-        - width (int): width of maze.
-        """
-        for item in self.list_items:
-            if item.position_tuple == (height, width):
-                print(C.DISPLAY[item.name], end='')
-
     def chars_meet_up(self):
         """
         chars_meet_up disable either the gard or Macgyver when they meet up.

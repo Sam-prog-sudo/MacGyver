@@ -11,8 +11,6 @@ class Main:
     def __init__(self):
         self.lab = Maze()
         self.lab.create_lab_elements()
-        intro()
-        self.lab.print_lab()
 
     def still_awake(self):
         """

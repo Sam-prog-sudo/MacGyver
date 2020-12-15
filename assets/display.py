@@ -28,6 +28,41 @@ def intro():
     """
     intro print ascii art.
     """
-    with open(C.INTRO_TEMPLATE, 'r') as f:
+    with open(C.INTRO_ART, 'r') as f:
         for line in f:
             print(line.rstrip())
+
+
+def print_lab(maze):
+    """
+    print_lab using its height and width.
+
+    Compare objects position with a position tuple
+    by iterating through maze width and height, to print following objects:
+    - all unpicked items
+    - all walls
+    - Macgyver
+    - the gard
+    - all empty paths
+    """
+    print('\n')
+    for i in range(0, C.SIZE['height']):
+        for j in range(0, C.SIZE['width']):
+
+            if maze.list_items:
+                for item in maze.list_items:
+                    if item.position_tuple == (i, j):
+                        print(C.DISPLAY[item.name], end='')
+
+            if (i, j) in maze.list_walls:
+                print(C.DISPLAY['wall'], end='')
+
+            elif maze.macgyver.position_tuple == (i, j):
+                print(C.DISPLAY['macgyver'], end='')
+
+            elif maze.gard.position_tuple == (i, j):
+                print(C.DISPLAY['gard'], end='')
+
+            elif (i, j) in maze.list_empty_paths:
+                print(C.DISPLAY['path'], end='')
+        print('')
