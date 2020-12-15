@@ -27,7 +27,7 @@ class Characters:
         """
         self.sleeping = True
 
-    def move(self, direction, list_valid_path):
+    def move_char(self, direction, list_valid_path):
         """
         Change position of movable characters.
 
@@ -47,55 +47,69 @@ class Characters:
 
             if direction == 'up':
                 new_pos = self.position_Y - 1
-                self._validate_move_y(new_pos, list_valid_path)
+                condition = self.validate_move(
+                    list_valid_path,
+                    pos_x=self.position_X,
+                    pos_y=new_pos,
+                    )
+                if condition:
+                    self.position_Y = new_pos
+                    return condition
 
             elif direction == 'down':
                 new_pos = self.position_Y + 1
-                self._validate_move_y(new_pos, list_valid_path)
+                condition = self.validate_move(
+                    list_valid_path,
+                    pos_x=self.position_X,
+                    pos_y=new_pos,
+                    )
+                if condition:
+                    self.position_Y = new_pos
+                    return condition
 
             elif direction == 'left':
                 new_pos = self.position_X - 1
-                self._validate_move_x(new_pos, list_valid_path)
+                condition = self.validate_move(
+                    list_valid_path,
+                    pos_x=new_pos,
+                    pos_y=self.position_Y,
+                    )
+                if condition:
+                    self.position_X = new_pos
+                    return condition
 
-            else:
+            elif direction == 'right':
                 new_pos = self.position_X + 1
-                self._validate_move_x(new_pos, list_valid_path)
+                condition = self.validate_move(
+                    list_valid_path,
+                    pos_x=new_pos,
+                    pos_y=self.position_Y,
+                    )
+                if condition:
+                    self.position_X = new_pos
+                    return condition
+            else:
+                print(f"Wrong input: {direction}")
 
-        else:
-            raise ValueError(
-                f"Direction can only be one of {C.VALID_DIRECTIONS}"
-                )
-
-    def _validate_move_x(self, pos_x, list_valid_path):
+    def _validate_move(list_valid_path, pos_x, pos_y):
         """
-        Compare character desired position with possible postions.
+        Compare tuple of desired position with tuple of possible postions.
 
         Store character new position.
 
         Args:
-        - pos_x (int): desired postion to be compared.
+        - pos_x (int): desired postion_x to be compared.
+        - pos_y (int): desired postion_y to be compared.
         - list_valid_path (list): list of valid postion to compare with.
+
+        Returns:
+        - (bool): is desired postion in list of valid position ?
         """
-        if (self.position_Y, pos_x) not in list_valid_path:
+        if (pos_y, pos_x) not in list_valid_path:
             print("Wrong way :(\n")
-            return
+            return False
         else:
-            self.position_X = pos_x
-
-    def _validate_move_y(self, pos_y, list_valid_path):
-        """
-        Compare character desired position with possible postions.
-
-        Store character new position.
-
-        Args:
-        - pos_y (int): desired postion to be compared.
-        - list_valid_path (list): list of valid postion to compare with.
-        """
-        if (pos_y, self.position_X) not in list_valid_path:
-            return
-        else:
-            self.position_Y = pos_y
+            return True
 
     def pick_up_item(self, an_item):
         """
