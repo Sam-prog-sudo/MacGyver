@@ -91,7 +91,8 @@ class Characters:
             else:
                 print(f"Wrong input: {direction}")
 
-    def _validate_move(list_valid_path, pos_x, pos_y):
+    @staticmethod
+    def validate_move(list_valid_path, pos_x, pos_y):
         """
         Compare tuple of desired position with tuple of possible postions.
 
