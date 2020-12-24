@@ -13,10 +13,8 @@ from .items import SomeItem
 class Maze:
 
     def __init__(self):
-        self.dict_display = {}
         self.list_walls = []
         self.list_paths = []
-        self.list_items = []
         self.number_items = len(C.CHOICE_ITEMS['name'])
 
     def create_lab_elements(self):
@@ -82,9 +80,7 @@ class Maze:
         Returns:
         - list: resulting list without desired list of elements.
         """
-        return [
-            pos for pos in list1 if pos not in list2
-            ]
+        return [pos for pos in list1 if pos not in list2]
 
     def _create_all_items(self):
         """
@@ -94,16 +90,10 @@ class Maze:
         from a list to create n instaces of SomeItem.
         """
         list_items_pos = self.__pick_random_items_pos(self.number_items)
-
-        for name in C.CHOICE_ITEMS['name']:
-            n = 0
-            self.list_items.append(
-                self.__create_an_item(
-                    a_name=name,
-                    pos_tuple=list_items_pos.pop(n)
-                    )
-                )
-            n += 1
+        self.list_items = [
+            self.__create_an_item(name, list_items_pos.pop())
+            for name in C.CHOICE_ITEMS['name']
+        ]
 
     def __pick_random_items_pos(self, nbr_of_items: int):
         """
@@ -146,12 +136,11 @@ class Maze:
         Returns:
         - object: an instance of SomeItem
         """
-        item = SomeItem(
+        return SomeItem(
             name=a_name,
             position_X=pos_tuple[1],
             position_Y=pos_tuple[0]
         )
-        return item
 
     def chars_meet_up(self):
         """
