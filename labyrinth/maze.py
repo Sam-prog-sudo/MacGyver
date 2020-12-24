@@ -82,19 +82,6 @@ class Maze:
         """
         return [pos for pos in list1 if pos not in list2]
 
-    def _create_all_items(self):
-        """
-        _create_all_items for the maze.
-
-        Pick a finite number of random position
-        from a list to create a list of items.
-        """
-        list_items_pos = self.__pick_random_items_pos(self.number_items)
-        self.list_items = [
-            self.__create_an_item(name, list_items_pos.pop())
-            for name in C.CHOICE_ITEMS['name']
-        ]
-
     def __pick_random_items_pos(self, nbr_of_items: int):
         """
         __pick_random_items_pos from a list of available paths.
@@ -141,6 +128,19 @@ class Maze:
             position_X=pos_tuple[1],
             position_Y=pos_tuple[0]
         )
+
+    def _create_all_items(self):
+        """
+        _create_all_items for the maze.
+
+        Pick a finite number of random position
+        from a list to create a list of items.
+        """
+        list_items_pos = self.__pick_random_items_pos(self.number_items)
+        self.list_items = [
+            self.__create_an_item(name, list_items_pos.pop())
+            for name in C.CHOICE_ITEMS['name']
+        ]
 
     def chars_meet_up(self):
         """
