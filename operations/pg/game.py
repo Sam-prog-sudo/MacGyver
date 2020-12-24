@@ -19,24 +19,14 @@ class Game:
 
     def build_structures(self):
         self.structure = pygame.sprite.Group()
-        decor_sprites = []
-        path_sprites = []
+        decor_sprites = [Decor('wall', pos_tuple) for pos_tuple in self.maze.list_walls] # noqa
+        path_sprites = [Decor('path', pos_tuple) for pos_tuple in self.maze.list_paths] # noqa
 
-        for pos_tuple in self.maze.list_walls:
-            decor_sprites.append(Decor('wall', pos_tuple))
-        for pos_tuple in self.maze.list_paths:
-            path_sprites.append(Decor('path', pos_tuple))
-
-        self.structure.add(
-            decor_sprites+path_sprites
-            )
+        self.structure.add(decor_sprites+path_sprites)
 
     def build_items(self):
         self.items = pygame.sprite.Group()
-        items_sprites = []
-
-        for elt in self.maze.list_items:
-            items_sprites.append(Elements(elt))
+        items_sprites = [Elements(elt) for elt in self.maze.list_items]
 
         self.items.add(items_sprites)
 
@@ -51,9 +41,7 @@ class Game:
         if a_sprite:
             self.items.remove(a_sprite)
             self.structure.add(
-                [
-                    Decor('path', (a_sprite.rect.y, a_sprite.rect.x)),
-                ]
+                [Decor('path', (a_sprite.rect.y, a_sprite.rect.x))]
             )
 
     def run(self):
