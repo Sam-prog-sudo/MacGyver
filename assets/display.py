@@ -33,6 +33,11 @@ def intro():
             print(line.rstrip())
 
 
+def display_backpack(maze):
+    list_backpack = [item.name for item in maze.macgyver.backpack]
+    print('Picked up item(s):{}\n'.format(list_backpack))
+
+
 def print_lab(maze):
     """
     print_lab using its height and width.

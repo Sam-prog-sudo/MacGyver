@@ -45,5 +45,6 @@ class Interaction:
                 self.lab.update_list_items(an_item)
                 self.lab.update_list_empty_path(an_item)
                 print(d.item, an_item.name)
+                d.display_backpack(self.lab)
                 if len(self.lab.macgyver.backpack) == 3:
                     print(d.yahoo)
