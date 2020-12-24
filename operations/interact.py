@@ -3,6 +3,9 @@ from assets import display as d
 
 
 class Interaction:
+    """
+    Class for managing characters and items interactions.
+    """
     def __init__(self, maze):
         self.lab = maze
 

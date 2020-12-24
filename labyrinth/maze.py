@@ -21,7 +21,7 @@ class Maze:
         """
         Read labyrinth template text file and create all elements.
 
-        Iterates through the labyrinth text template to create :
+        Iterates through the labyrinth text template to construct :
         - a list of tuples containing walls positions
         - a list of tuples containing paths positions
         (on which MacGyver can move)
@@ -32,7 +32,7 @@ class Maze:
         NB:
         - position_X matches column number
         - position_y matches row number.
-        - list_empty_paths is created for printing purposes.
+        - list_empty_paths is created for displaying purposes.
         """
 
         with open(C.LAB_TEMPLATE, 'r') as m:
@@ -86,8 +86,8 @@ class Maze:
         """
         _create_all_items for the maze.
 
-        Pick a finite number (n = self.number_items) of random position
-        from a list to create n instaces of SomeItem.
+        Pick a finite number of random position
+        from a list to create a list of items.
         """
         list_items_pos = self.__pick_random_items_pos(self.number_items)
         self.list_items = [

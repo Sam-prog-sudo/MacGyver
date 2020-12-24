@@ -51,9 +51,8 @@ class Characters:
         - direction (str): direction to which the character is moving.
         - list_valid_path (list): a list of valid path.
 
-        Raises:
-        - ValueError: direction of movement
-            can only be of (set) VALID_DIRECTIONS.
+        Returns:
+        - bool: is this a valid movement ?.
         """
 
         if direction in C.VALID_DIRECTIONS:
@@ -75,11 +74,8 @@ class Characters:
         """
         Compare tuple of desired position with tuple of possible postions.
 
-        Store character new position.
-
         Args:
-        - pos_x (int): desired postion_x to be compared.
-        - pos_y (int): desired postion_y to be compared.
+        - tuple_pos (tuple): desired tuple postion to be compared.
         - list_valid_path (list): list of valid postion to compare with.
 
         Returns:
