@@ -3,6 +3,7 @@
 characters.py
 """
 from assets import constants as C
+from assets import display as d
 
 
 class Characters:
@@ -67,7 +68,7 @@ class Characters:
                 self.position_X = new_tuple_pos[1]
                 return condition
         else:
-            print("Wrong input: ", direction)
+            print('{}'.format(direction)+d.inval_in)
 
     @staticmethod
     def validate_move(list_valid_path, tuple_pos):

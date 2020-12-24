@@ -15,14 +15,14 @@ class Main:
         self.lab.create_lab_elements()
 
     def select_plateform(self):
-        print(d.intro_text)
+        print(d.plat)
         x = input()
         if x == "g" or x == "G":
             self.gui()
         elif x == "c" or x == "C":
             self.console()
         else:
-            print(d.inval_in, x)
+            print(x, d.inval_in)
             return self.select_plateform()
 
     def console(self):
@@ -47,4 +47,5 @@ class Main:
         """
         Work hard, play hard !
         """
+        print(d.intro_text)
         self.select_plateform()
