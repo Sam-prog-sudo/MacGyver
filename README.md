@@ -4,7 +4,7 @@
 ---
 ## Avant-propos
 
-Aider MacGyver à s'échapper du labyrinth, sans se faire attraper par le garde .
+Aider MacGyver à s'échapper du labyrinthe, sans se faire attraper par le garde .
 
 ## Table des matières
 
@@ -81,7 +81,7 @@ Cette liste est non-exhaustive:
 
 - Mettre en place des test avec pytest.  
 - Générer une documentation avec sphinx.  
-- Permettre une saugarde physique de la partie.  
+- Permettre une sauvegarde physique de la partie.  
 
 
 ## License
