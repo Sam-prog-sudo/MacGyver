@@ -13,47 +13,47 @@ class Game:
         pygame.display.set_caption("a_maze_ing")
         self.clock = pygame.time.Clock()
         self.running = True
-        self.build_structures()
-        self.build_items()
-        self.build_pers()
+        self._build_structures()
+        self._build_items()
+        self._build_pers()
 
-    def build_structures(self):
+    def _build_structures(self):
+        """
+        Create walls and paths sprites.
+        """
         self.structure = pygame.sprite.Group()
-        decor_sprites = []
-        path_sprites = []
+        decor_sprites = [Decor('wall', pos_tuple) for pos_tuple in self.maze.list_walls] # noqa
+        path_sprites = [Decor('path', pos_tuple) for pos_tuple in self.maze.list_paths] # noqa
 
-        for pos_tuple in self.maze.list_walls:
-            decor_sprites.append(Decor('wall', pos_tuple))
-        for pos_tuple in self.maze.list_paths:
-            path_sprites.append(Decor('path', pos_tuple))
+        self.structure.add(decor_sprites+path_sprites)
 
-        self.structure.add(
-            decor_sprites+path_sprites
-            )
-
-    def build_items(self):
+    def _build_items(self):
+        """
+        Create items sprites.
+        """
         self.items = pygame.sprite.Group()
-        items_sprites = []
-
-        for elt in self.maze.list_items:
-            items_sprites.append(Elements(elt))
+        items_sprites = [Elements(elt) for elt in self.maze.list_items]
 
         self.items.add(items_sprites)
 
-    def build_pers(self):
+    def _build_pers(self):
+        """
+        Create characters sprites.
+        """
         self.pers = pygame.sprite.Group()
         self.player = Player(self.maze, self.maze.macgyver)
         gard = Elements(self.maze.gard)
         self.pers.add([self.player, gard])
 
     def update_pick_item(self):
+        """
+        Update sprites when item is picked up.
+        """
         a_sprite = pygame.sprite.spritecollideany(self.player, self.items)
         if a_sprite:
             self.items.remove(a_sprite)
             self.structure.add(
-                [
-                    Decor('path', (a_sprite.rect.y, a_sprite.rect.x)),
-                ]
+                [Decor('path', (a_sprite.rect.y, a_sprite.rect.x))]
             )
 
     def run(self):

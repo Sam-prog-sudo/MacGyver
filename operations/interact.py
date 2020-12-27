@@ -3,6 +3,9 @@ from assets import display as d
 
 
 class Interaction:
+    """
+    Class for managing characters and items interactions.
+    """
     def __init__(self, maze):
         self.lab = maze
 
@@ -45,5 +48,6 @@ class Interaction:
                 self.lab.update_list_items(an_item)
                 self.lab.update_list_empty_path(an_item)
                 print(d.item, an_item.name)
+                d.display_backpack(self.lab)
                 if len(self.lab.macgyver.backpack) == 3:
                     print(d.yahoo)

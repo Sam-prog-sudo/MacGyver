@@ -45,6 +45,13 @@ class Player(Elements):
         self.rect.y += C.A_MOVE
 
     def update_pos(self, event, inter):
+        """
+        Manage character movements in lab.
+
+        Args:
+            event : event in pygame.event.get()
+            inter : Instance of class Interaction
+        """
         keys = pygame.key.get_pressed()
         mov_keys = (pygame.K_LEFT, pygame.K_RIGHT, pygame.K_UP, pygame.K_DOWN)
         if (any(mov_keys) in keys) and event.type == pygame.KEYDOWN:

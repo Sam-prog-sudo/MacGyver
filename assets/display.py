@@ -10,13 +10,14 @@ Welcome to a_maze_ing !
 Save Macgyver by exiting this labyrinth.
 Words of caution: beware of the gard !
 (he has COVID)
-
-Please select a platform:
+"""
+plat = """
+Please select a valid platform:
 'g' for graphical interface
 'c' for console
 """
 goodbye = "See you soon :)"
-inval_in = "Invalid input: "
+inval_in = " is an invalid input."
 victory = "You've beaten this bloody gard :)"
 defeat = "You've been caught :("
 ask_move = 'Enter valid move: '
@@ -31,6 +32,11 @@ def intro():
     with open(C.INTRO_ART, 'r') as f:
         for line in f:
             print(line.rstrip())
+
+
+def display_backpack(maze):
+    list_backpack = [item.name for item in maze.macgyver.backpack]
+    print('Picked up item(s):{}\n'.format(list_backpack))
 
 
 def print_lab(maze):
